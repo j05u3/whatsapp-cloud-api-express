@@ -175,7 +175,11 @@ export function webhookMainHandler(
                   data,
                   to_phone_number_id: toPhoneNumberId,
                 };
-                await onNewMessage(payload);
+                try {
+                  await onNewMessage(payload);
+                } catch (error) {
+                  console.error(error);
+                }
               }
             }
             // processing statuses
@@ -185,7 +189,11 @@ export function webhookMainHandler(
                 ..._status,
                 to_phone_number_id: toPhoneNumberId,
               };
-              await onStatusChange?.(payload);
+              try {
+                await onStatusChange?.(payload);
+              } catch (error) {
+                console.error(error);
+              }
             }
           }
         }
