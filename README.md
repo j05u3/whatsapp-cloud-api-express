@@ -46,20 +46,20 @@ Default: `rainbows`
 
 Lorem ipsum.
 
-[build-img]:https://github.com/ryansonshine/whatsapp-cloud-api-express/actions/workflows/release.yml/badge.svg
-[build-url]:https://github.com/ryansonshine/whatsapp-cloud-api-express/actions/workflows/release.yml
-[downloads-img]:https://img.shields.io/npm/dt/whatsapp-cloud-api-express
-[downloads-url]:https://www.npmtrends.com/whatsapp-cloud-api-express
-[npm-img]:https://img.shields.io/npm/v/whatsapp-cloud-api-express
-[npm-url]:https://www.npmjs.com/package/whatsapp-cloud-api-express
-[issues-img]:https://img.shields.io/github/issues/ryansonshine/whatsapp-cloud-api-express
-[issues-url]:https://github.com/ryansonshine/whatsapp-cloud-api-express/issues
-[codecov-img]:https://codecov.io/gh/ryansonshine/whatsapp-cloud-api-express/branch/main/graph/badge.svg
-[codecov-url]:https://codecov.io/gh/ryansonshine/whatsapp-cloud-api-express
-[semantic-release-img]:https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg
-[semantic-release-url]:https://github.com/semantic-release/semantic-release
-[commitizen-img]:https://img.shields.io/badge/commitizen-friendly-brightgreen.svg
-[commitizen-url]:http://commitizen.github.io/cz-cli/
+[build-img]: https://github.com/j05u3/whatsapp-cloud-api-express/actions/workflows/release.yml/badge.svg
+[build-url]: https://github.com/j05u3/whatsapp-cloud-api-express/actions/workflows/release.yml
+[downloads-img]: https://img.shields.io/npm/dt/whatsapp-cloud-api-express
+[downloads-url]: https://www.npmtrends.com/whatsapp-cloud-api-express
+[npm-img]: https://img.shields.io/npm/v/whatsapp-cloud-api-express
+[npm-url]: https://www.npmjs.com/package/whatsapp-cloud-api-express
+[issues-img]: https://img.shields.io/github/issues/j05u3/whatsapp-cloud-api-express
+[issues-url]: https://github.com/j05u3/whatsapp-cloud-api-express/issues
+[codecov-img]: https://codecov.io/gh/j05u3/whatsapp-cloud-api-express/branch/main/graph/badge.svg
+[codecov-url]: https://codecov.io/gh/j05u3/whatsapp-cloud-api-express
+[semantic-release-img]: https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg
+[semantic-release-url]: https://github.com/semantic-release/semantic-release
+[commitizen-img]: https://img.shields.io/badge/commitizen-friendly-brightgreen.svg
+[commitizen-url]: http://commitizen.github.io/cz-cli/
 
 ## Attribution
 
