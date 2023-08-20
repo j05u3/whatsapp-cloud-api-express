@@ -60,3 +60,9 @@ Lorem ipsum.
 [semantic-release-url]:https://github.com/semantic-release/semantic-release
 [commitizen-img]:https://img.shields.io/badge/commitizen-friendly-brightgreen.svg
 [commitizen-url]:http://commitizen.github.io/cz-cli/
+
+## Attribution
+
+This project was started using the template: https://github.com/ryansonshine/typescript-npm-package-template.
+
+This project was heavily inspired by https://github.com/tawn33y/whatsapp-cloud-api.
