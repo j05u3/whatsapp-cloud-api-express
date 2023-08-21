@@ -93,7 +93,9 @@ To send a message you can check [this guide](https://github.com/tawn33y/whatsapp
 
 ## Related work
 
-I built a [chats visualization frontend compatible here](https://github.com/j05u3/chats_manager) that you can use to visualize your chats ✌️.
+I built an open-source [chats visualization frontend here](https://github.com/j05u3/chats_manager) that you can use to visualize your chats, it's compatible with this library ✌️.
+
+I also built https://monaguillo.org/ using this library.
 
 ## Attribution
 
