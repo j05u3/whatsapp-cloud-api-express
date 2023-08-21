@@ -1,23 +1,10 @@
-import { Application } from 'express';
 import { Request, Response } from 'express-serve-static-core';
-import { Server } from 'http';
 import { FreeFormObject } from './utils/misc';
 import { Message, Status, StatusReceived } from './createBot.types';
+import { Router } from 'express';
+import { logRequest } from './utils/logRequestMiddleware';
 
-export interface ServerOptions {
-  app?: Application;
-  useMiddleware?: (app: Application) => void;
-  port?: number;
-  webhookPath?: string;
-  webhookVerifyToken?: string;
-}
-
-export interface ExpressServer {
-  server?: Server;
-  app: Application;
-}
-
-export function webhookVerifyTokenHandler(webhookVerifyToken: string) {
+function webhookVerifyTokenHandler(webhookVerifyToken: string) {
   return (
     req: Request<
       Record<string, unknown>,
@@ -54,10 +41,9 @@ export function webhookVerifyTokenHandler(webhookVerifyToken: string) {
   };
 }
 
-export function webhookMainHandler(
+function webhookMainHandler(
   onNewMessage: (message: Message) => Promise<void>,
-  onStatusChange?: (status: Status) => Promise<void>,
-  logAllEntrantRequests?: boolean
+  onStatusChange?: (status: Status) => Promise<void>
 ) {
   return (
     req: Request<
@@ -104,10 +90,6 @@ export function webhookMainHandler(
     res: Response
   ): void => {
     (async () => {
-      if (logAllEntrantRequests) {
-        console.log(JSON.stringify(req.body));
-      }
-
       if (!req.body.object || !req.body.entry) {
         res.sendStatus(400);
         return;
@@ -203,4 +185,33 @@ export function webhookMainHandler(
       // eslint-disable-next-line @typescript-eslint/no-empty-function
     })().then(() => {}, console.error);
   };
+}
+
+export interface WebhookRouterOptions {
+  webhookVerifyToken: string;
+  onNewMessage: (message: Message) => Promise<void>;
+  webhookPath?: string;
+  onStatusChange?: (status: Status) => Promise<void>;
+  logAllEntrantRequests?: boolean;
+}
+
+export function getWebhookRouter(options: WebhookRouterOptions): Router {
+  const r = Router();
+
+  if (options.logAllEntrantRequests) {
+    // log request URL and body
+    r.use(logRequest);
+  }
+
+  // endpoints for webhook
+  r.get(
+    options.webhookPath ?? '/',
+    webhookVerifyTokenHandler(options.webhookVerifyToken)
+  );
+  r.post(
+    options.webhookPath ?? '/',
+    webhookMainHandler(options.onNewMessage, options.onStatusChange)
+  );
+
+  return r;
 }

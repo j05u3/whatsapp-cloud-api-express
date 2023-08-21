@@ -1,7 +1,7 @@
 {
   "name": "whatsapp-cloud-api-express",
   "version": "1.0.1",
-  "description": "A template for creating npm packages using TypeScript and VSCode",
+  "description": "A set of Node.js and Express.js functions for sending/receiving messages using the Whatsapp Cloud API. Contains typescript declarations.",
   "main": "./lib/index.js",
   "files": [
     "lib/**/*"

@@ -1,5 +1,5 @@
 import isURL from 'validator/lib/isURL';
-import { ICreateBot } from './createBot.types';
+import { ICreateMessageSender } from './createBot.types';
 import {
   MediaBase,
   TextMessage,
@@ -21,7 +21,7 @@ const payloadBase: PayloadBase = {
   recipient_type: 'individual',
 };
 
-export const createBot: ICreateBot = (
+export const createMessageSender: ICreateMessageSender = (
   fromPhoneNumberId,
   accessToken,
   responseLogger

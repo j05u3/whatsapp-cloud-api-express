@@ -1,7 +1,5 @@
-export { createBot } from './createBot';
-export {
-  webhookMainHandler,
-  webhookVerifyTokenHandler,
-} from './expressComponents';
+export { createMessageSender } from './createBot';
 
-export type { Bot, Message } from './createBot.types';
+export { getWebhookRouter } from './expressRouter';
+
+export type { MessageSender, Message } from './createBot.types';

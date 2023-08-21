@@ -8,7 +8,7 @@
 [![Commitizen Friendly][commitizen-img]][commitizen-url]
 [![Semantic Release][semantic-release-img]][semantic-release-url]
 
-> My awesome module
+> A set of Node.js and Express.js functions for sending/receiving messages using the [Whatsapp Cloud API](https://developers.facebook.com/docs/whatsapp/cloud-api/). Contains typescript declarations.
 
 ## Install
 
@@ -60,6 +60,10 @@ Lorem ipsum.
 [semantic-release-url]: https://github.com/semantic-release/semantic-release
 [commitizen-img]: https://img.shields.io/badge/commitizen-friendly-brightgreen.svg
 [commitizen-url]: http://commitizen.github.io/cz-cli/
+
+## Related work
+
+I built a [chats visualization frontend compatible here](https://github.com/j05u3/chats_manager) that you can use to visualize your chats ✌️.
 
 ## Attribution
 

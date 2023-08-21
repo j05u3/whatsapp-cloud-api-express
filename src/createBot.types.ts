@@ -39,7 +39,7 @@ export interface StatusError {
     | undefined;
 }
 
-export interface Bot {
+export interface MessageSender {
   sendText: (
     to: string,
     text: string,
@@ -126,8 +126,8 @@ export interface Bot {
   ) => Promise<SendMessageResult>;
 }
 
-export type ICreateBot = (
+export type ICreateMessageSender = (
   fromPhoneNumberId: string,
   accessToken: string,
   responseLogger?: (obj: any) => Promise<void>
-) => Bot;
+) => MessageSender;
