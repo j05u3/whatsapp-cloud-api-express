@@ -8,23 +8,25 @@
 [![Commitizen Friendly][commitizen-img]][commitizen-url]
 [![Semantic Release][semantic-release-img]][semantic-release-url]
 
-> A set of Node.js and Express.js functions for sending/receiving messages using the [Whatsapp Cloud API](https://developers.facebook.com/docs/whatsapp/cloud-api/). Contains typescript declarations.
+> A set of Node.js and Express.js functions for sending/receiving Whatsapp messages using the [Whatsapp Cloud API](https://developers.facebook.com/docs/whatsapp/cloud-api/).
 
 ## Features:
 
 All features in [here](https://github.com/tawn33y/whatsapp-cloud-api/tree/v0.2.6), plus:
 
-✅ Added `to_phone_number` so you can identify which phone number was the one receiving the message.
+- 🔥 Added a way to listen for message status changes in messages. This allows to listen for `delivered`, `failed`, `read`,... statuses on the sent messages.
 
-✅ Added support for type `button` in incoming messages. Which is generated when the user "replies" from a template button.
+- 🔥 Made the webhook able to run on serverless environments (like Google Cloud Functions).[^1]
 
-✅ Added a logging callback for each message sent so you can log each sent message easily.
+- ✅ Added `to_phone_number` so you can identify which phone number was the one receiving the message.
 
-✅ Added a way to listen for status changes in messages. This allows to listen for 'delivered', 'failed', 'read',... statuses on the sent messages.
+- ✅ Added support for type `button` in incoming messages. Which is generated when the user "replies" from a template button.
 
-✅ Changed the architecture so we can use the webhook and the sender separately.
+- ✅ Added a logging callback for each message sent so you can log each sent message easily.
 
-✅ Made the webhook able to run on serverless environments (like Google Cloud Functions).[^1]
+- ✅ Changed the architecture so we can use the webhook and the sender separately.
+
+- ✅ Added 'parameters' type for template header component.
 
 [^1]: This is because on the webhook now we wait for callbacks to finish before the response is sent (`sendStatus`), this was done because on serverless environments code is not guaranteed to be kept alive after the response is sent.
 
