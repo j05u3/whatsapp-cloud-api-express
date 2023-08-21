@@ -46,7 +46,7 @@ The webhook part of the API is implemented as an express router. The webhook is 
 
 ```ts
 app.use(
-  '/webhook/whatsapp',
+  '/webhook/whatsapp', // you can change this path to whatever you want, but make sure to change it on the Facebook Developer Console too
   getWebhookRouter({
     // fill your own values here:
     webhookVerifyToken: process.env.WHATSAPP_WEBHOOK_VERIFICATION_TOKEN ?? '',
