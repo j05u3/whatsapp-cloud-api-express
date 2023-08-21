@@ -40,13 +40,19 @@ npm install whatsapp-cloud-api-express
 
 You can use this library only to send Whatsapp messages or only to receive Whatsapp messages or you can do both.
 
+Beforehand you should get some values from the developers.facebook.com, you can use [this amazing tutorial](https://github.com/tawn33y/whatsapp-cloud-api/blob/v0.2.6/TUTORIAL.md) by @tawn33y. It will also help with using ngrok for verifying the webhook.
+
+This library has been tested on v15.0 of the webhook API.
+![Alt text](image.png)
+
 ### Receiving messages
 
 The webhook part of the API is implemented as an express router. The webhook is the part that allows you to listen for new messages incoming to your bot. You can use it like this:
 
 ```ts
 app.use(
-  '/webhook/whatsapp', // you can change this path to whatever you want, but make sure to change it on the Facebook Developer Console too
+  '/webhook/whatsapp', // you can change this path to whatever you want,
+  // but make sure to change it on the Facebook Developer Console too
   getWebhookRouter({
     // fill your own values here:
     webhookVerifyToken: process.env.WHATSAPP_WEBHOOK_VERIFICATION_TOKEN ?? '',
