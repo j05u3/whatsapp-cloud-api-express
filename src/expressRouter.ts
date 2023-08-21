@@ -192,6 +192,11 @@ export interface WebhookRouterOptions {
   onNewMessage: (message: Message) => Promise<void>;
   webhookPath?: string;
   onStatusChange?: (status: Status) => Promise<void>;
+  /**
+   * Log all entrant requests to console.
+   * Remember that the Whatsapp servers make requests to this webhook with new incoming messages and statuses.
+   * This option is useful for debugging.
+   */
   logAllEntrantRequests?: boolean;
 }
 

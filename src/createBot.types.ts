@@ -129,5 +129,8 @@ export interface MessageSender {
 export type ICreateMessageSender = (
   fromPhoneNumberId: string,
   accessToken: string,
+  /**
+   * Optional function to log/store the request and response from the API.
+   */
   responseLogger?: (obj: any) => Promise<void>
 ) => MessageSender;
