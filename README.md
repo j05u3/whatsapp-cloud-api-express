@@ -63,6 +63,6 @@ Lorem ipsum.
 
 ## Attribution
 
-This project was started using the template: https://github.com/ryansonshine/typescript-npm-package-template.
+This project was based on https://github.com/j05u3/whatsapp-cloud-api which is a fork of https://github.com/tawn33y/whatsapp-cloud-api. Thanks to @tawn33y and the community for the hard work.
 
-This project was heavily inspired by https://github.com/tawn33y/whatsapp-cloud-api.
+This project was started using the template: https://github.com/ryansonshine/typescript-npm-package-template.
