@@ -40,10 +40,9 @@ npm install whatsapp-cloud-api-express
 
 You can use this library only to send Whatsapp messages or only to receive Whatsapp messages or you can do both.
 
-Beforehand you should get some values from the developers.facebook.com, you can use [this amazing tutorial](https://github.com/tawn33y/whatsapp-cloud-api/blob/v0.2.6/TUTORIAL.md) by @tawn33y. It will also help with using ngrok for verifying the webhook.
+Beforehand you should get some values from the developers.facebook.com, you can use [this amazing tutorial](https://github.com/tawn33y/whatsapp-cloud-api/blob/v0.2.6/TUTORIAL.md) by @tawn33y.
 
 This library has been tested on v15.0 of the webhook API.
-![Alt text](image.png)
 
 ### Receiving messages
 
@@ -60,6 +59,8 @@ app.use(
   })
 );
 ```
+
+You will need to verify the webhook with Facebook. You can either deploy this to a server or deploy locally and use ngrok, the @tawn33y tutorial above has a section about using ngrok and verifying.
 
 ### Sending messages
 
