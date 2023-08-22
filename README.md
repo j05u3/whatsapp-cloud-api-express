@@ -100,7 +100,7 @@ If you are using serverless I suggest to set min instances (in Google Cloud Func
 
 I built an open-source [chats visualization frontend here](https://github.com/j05u3/chats_manager) that you can use to visualize your chats, it's compatible with this library ✌️.
 
-I also built https://monaguillo.org/ using this library.
+I also built [monaguillo.org](https://monaguillo.org) using this library.
 
 ## Attribution
 
