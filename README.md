@@ -60,7 +60,7 @@ app.use(
 
 You will need to verify the webhook with Facebook. You can either deploy this to a server or deploy locally and use ngrok, the @tawn33y tutorial above has a section about using ngrok and verifying.
 
-This library has been tested on v15.0 of the webhook API.
+This library has been tested on v15.0 and v17.0 of the webhook API.
 
 ### Sending messages
 
@@ -93,8 +93,7 @@ To send a message you can check [this guide](https://github.com/tawn33y/whatsapp
 
 ## Some recommendations
 
-If you are using serverless I suggest to set min instances (in Google Cloud Functions) or reserved concurrency (in AWS) to at least 1 (~4 USD or less in monthly cost) so your bot responds fast without being affected by cold starts. 
-
+If you are using serverless I suggest to set min instances (in Google Cloud Functions) or reserved concurrency (in AWS) to at least 1 (~4 USD or less in monthly cost) so your bot responds fast without being affected by cold starts.
 
 ## Related work
 
