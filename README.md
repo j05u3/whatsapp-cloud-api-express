@@ -95,6 +95,8 @@ To send a message you can check [this guide](https://github.com/tawn33y/whatsapp
 
 If you are using serverless I suggest to set min instances (in Google Cloud Functions) or reserved concurrency (in AWS) to at least 1 (~4 USD or less in monthly cost) so your bot responds fast without being affected by cold starts.
 
+Make sure to **only allowlist** the Facebook IPs in your serverless environment. See [here](https://developers.facebook.com/docs/whatsapp/cloud-api/guides/set-up-webhooks/#ip-addresses) for the IPs.
+
 ## Related work
 
 I built an open-source [chats visualization frontend here](https://github.com/j05u3/chats_manager) that you can use to visualize your chats, it's compatible with this library ✌️.
