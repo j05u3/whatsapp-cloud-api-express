@@ -132,5 +132,9 @@ export type ICreateMessageSender = (
   /**
    * Optional function to log/store the request and response from the API.
    */
-  responseLogger?: (obj: any) => Promise<void>
+  responseLogger?: (obj: {
+    fromPhoneNumberId: string;
+    requestBody: any;
+    responseSummary: SendMessageResult;
+  }) => Promise<void>
 ) => MessageSender;
