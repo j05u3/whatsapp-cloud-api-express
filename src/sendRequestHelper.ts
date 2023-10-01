@@ -27,7 +27,11 @@ export const sendRequestHelper =
   (
     fromPhoneNumberId: string,
     accessToken: string,
-    responseLogger: (obj: any) => Promise<void> = defaultLogger,
+    responseLogger: (obj: {
+      fromPhoneNumberId: string;
+      requestBody: any;
+      responseSummary: SendMessageResult;
+    }) => Promise<void> = defaultLogger,
     version = 'v14.0'
   ) =>
   async <T>(data: T): Promise<SendMessageResult> => {
@@ -44,7 +48,7 @@ export const sendRequestHelper =
       });
       const result = rawResult as OfficialSendMessageResult;
 
-      const returnObject = {
+      const returnObject: SendMessageResult = {
         messageId: result.messages?.[0]?.id,
         phoneNumber: result.contacts?.[0]?.input,
         whatsappId: result.contacts?.[0]?.wa_id,
