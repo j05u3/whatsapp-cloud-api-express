@@ -40,7 +40,7 @@ npm install whatsapp-cloud-api-express
 
 You can use this library only to send Whatsapp messages or only to receive Whatsapp messages or you can do both.
 
-Beforehand you should get some values from the Facebook developers website, you can use [this amazing tutorial](https://github.com/tawn33y/whatsapp-cloud-api/blob/v0.2.6/TUTORIAL.md) by @tawn33y.
+Beforehand you should get some values from the Facebook developers website, you can use [the part (1) of this amazing tutorial](https://github.com/tawn33y/whatsapp-cloud-api/blob/v0.2.6/TUTORIAL.md) by @tawn33y.
 
 ### Receiving messages
 
