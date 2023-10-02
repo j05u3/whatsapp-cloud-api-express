@@ -45,6 +45,7 @@ export interface MessageSender {
     text: string,
     options?: {
       preview_url?: boolean;
+      reply?: string;
     }
   ) => Promise<SendMessageResult>;
   sendMessage: (
@@ -52,6 +53,7 @@ export interface MessageSender {
     text: string,
     options?: {
       preview_url?: boolean;
+      reply?: string;
     }
   ) => Promise<SendMessageResult>;
   sendReaction: (
@@ -64,6 +66,7 @@ export interface MessageSender {
     urlOrObjectId: string,
     options?: {
       caption?: string;
+      reply?: string;
     }
   ) => Promise<SendMessageResult>;
   sendDocument: (
@@ -72,19 +75,30 @@ export interface MessageSender {
     options?: {
       caption?: string;
       filename?: string;
+      reply?: string;
     }
   ) => Promise<SendMessageResult>;
-  sendAudio: (to: string, urlOrObjectId: string) => Promise<SendMessageResult>;
+  sendAudio: (
+    to: string,
+    urlOrObjectId: string,
+    options?: {
+      reply?: string;
+    }
+  ) => Promise<SendMessageResult>;
   sendVideo: (
     to: string,
     urlOrObjectId: string,
     options?: {
       caption?: string;
+      reply?: string;
     }
   ) => Promise<SendMessageResult>;
   sendSticker: (
     to: string,
-    urlOrObjectId: string
+    urlOrObjectId: string,
+    options?: {
+      reply?: string;
+    }
   ) => Promise<SendMessageResult>;
   sendLocation: (
     to: string,
@@ -93,6 +107,7 @@ export interface MessageSender {
     options?: {
       name?: string;
       address?: string;
+      reply?: string;
     }
   ) => Promise<SendMessageResult>;
   sendTemplate: (
@@ -101,7 +116,13 @@ export interface MessageSender {
     languageCode: string,
     components?: TemplateComponent[]
   ) => Promise<SendMessageResult>;
-  sendContacts: (to: string, contacts: Contact[]) => Promise<SendMessageResult>;
+  sendContacts: (
+    to: string,
+    contacts: Contact[],
+    options?: {
+      reply?: string;
+    }
+  ) => Promise<SendMessageResult>;
   sendReplyButtons: (
     to: string,
     bodyText: string,
@@ -111,6 +132,7 @@ export interface MessageSender {
     options?: {
       footerText?: string;
       header?: InteractiveHeader;
+      reply?: string;
     }
   ) => Promise<SendMessageResult>;
   sendList: (
@@ -127,6 +149,7 @@ export interface MessageSender {
     options?: {
       footerText?: string;
       header?: InteractiveHeader;
+      reply?: string;
     }
   ) => Promise<SendMessageResult>;
 }

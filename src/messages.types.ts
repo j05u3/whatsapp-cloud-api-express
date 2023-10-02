@@ -239,36 +239,43 @@ export interface Text {
 export interface AudioMessage extends Message {
   type: 'audio';
   audio: Media;
+  context?: { message_id: string };
 }
 
 export interface ContactMessage extends Message {
   type: 'contacts';
   contacts: Contact[];
+  context?: { message_id: string };
 }
 
 export interface DocumentMessage extends Message {
   type: 'document';
   document: Media;
+  context?: { message_id: string };
 }
 
 export interface ImageMessage extends Message {
   type: 'image';
   image: Media;
+  context?: { message_id: string };
 }
 
 export interface InteractiveMessage extends Message {
   type: 'interactive';
   interactive: Interactive;
+  context?: { message_id: string };
 }
 
 export interface LocationMessage extends Message {
   type: 'location';
   location: Location;
+  context?: { message_id: string };
 }
 
 export interface StickerMessage extends Message {
   type: 'sticker';
   sticker: Media;
+  context?: { message_id: string };
 }
 
 export interface TemplateMessage extends Message {
@@ -279,6 +286,7 @@ export interface TemplateMessage extends Message {
 export interface TextMessage extends Message {
   type: 'text';
   text: Text;
+  context?: { message_id: string };
 }
 
 export interface ReactionMessage extends Message {
@@ -292,6 +300,7 @@ export interface ReactionMessage extends Message {
 export interface VideoMessage extends Message {
   type: 'video';
   video: Media;
+  context?: { message_id: string };
 }
 
 export type MediaMessage =
