@@ -16,6 +16,8 @@ All features in [here](https://github.com/tawn33y/whatsapp-cloud-api/tree/v0.2.6
 
 - 🔥 Added a way to listen for message status changes in messages. This allows to listen for `delivered`, `failed`, `read`,... statuses on the sent messages.
 
+- 🔥 Added `sendReaction` function to [react to a message](https://github.com/j05u3/whatsapp-cloud-api-express/pull/1#issue-1922143536).
+
 - 🔥 Made the webhook able to run on serverless environments (like Google Cloud Functions).[^1]
 
 - ✅ Added `to_phone_number` so you can identify which phone number was the one receiving the message.
