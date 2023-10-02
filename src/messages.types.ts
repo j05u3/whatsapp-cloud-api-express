@@ -281,6 +281,14 @@ export interface TextMessage extends Message {
   text: Text;
 }
 
+export interface ReactionMessage extends Message {
+  type: 'reaction';
+  reaction: {
+    message_id: string;
+    emoji: string;
+  };
+}
+
 export interface VideoMessage extends Message {
   type: 'video';
   video: Media;

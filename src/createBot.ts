@@ -8,6 +8,7 @@ import {
   TemplateMessage,
   ContactMessage,
   InteractiveMessage,
+  ReactionMessage,
 } from './messages.types';
 import { sendRequestHelper } from './sendRequestHelper';
 
@@ -52,6 +53,16 @@ export const createMessageSender: ICreateMessageSender = (
     sendMessage(to, text, options) {
       return this.sendText(to, text, options);
     },
+    sendReaction: (to, emoji, message_id) =>
+      sendRequest<ReactionMessage>({
+        ...payloadBase,
+        to,
+        type: 'reaction',
+        reaction: {
+          emoji: emoji,
+          message_id: message_id,
+        },
+      }),
     sendImage: (to, urlOrObjectId, options) =>
       sendRequest<MediaMessage>({
         ...payloadBase,
