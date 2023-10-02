@@ -93,9 +93,11 @@ To send a message you can check [this guide](https://github.com/tawn33y/whatsapp
 
 ## Some recommendations
 
-If you are using serverless I suggest to set min instances (in Google Cloud Functions) or reserved concurrency (in AWS) to at least 1 (~4 USD or less in monthly cost) so your bot responds fast without being affected by cold starts.
+* If you are using serverless I suggest to set min instances (in Google Cloud Functions) or reserved concurrency (in AWS) to at least 1 (~4 USD or less in monthly cost) so your bot responds fast without being affected by cold starts.
 
-Make sure to **only allowlist** the Facebook IPs in your serverless environment. See [here](https://developers.facebook.com/docs/whatsapp/cloud-api/guides/set-up-webhooks/#ip-addresses) for the IPs.
+* Make sure to **only allowlist** the Facebook IPs in your serverless environment. See [here](https://developers.facebook.com/docs/whatsapp/cloud-api/guides/set-up-webhooks/#ip-addresses) for the IPs.
+
+* Make sure your `onNewMessage` function resolves in a 'reasonable time'. Not sure how long yet, but in a project where we were sleeping one minute Whatsapp servers started retrying the call to the webhook.
 
 ## Related work
 
