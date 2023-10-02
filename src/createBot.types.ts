@@ -54,6 +54,11 @@ export interface MessageSender {
       preview_url?: boolean;
     }
   ) => Promise<SendMessageResult>;
+  sendReaction: (
+    to: string,
+    emoji: string,
+    message_id: string
+  ) => Promise<SendMessageResult>;
   sendImage: (
     to: string,
     urlOrObjectId: string,
