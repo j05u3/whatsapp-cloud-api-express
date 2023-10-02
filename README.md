@@ -76,6 +76,8 @@ const sender = createMessageSender(
 
 To send a message you can check [this guide](https://github.com/tawn33y/whatsapp-cloud-api/blob/v0.2.6/API.md#api-reference) (omit `createBot`, `startExpressServer` and `on` as those were removed here). You can find some examples in [there too](https://github.com/tawn33y/whatsapp-cloud-api/tree/v0.2.6).
 
+Here is an "almost complete" example of the integration using Google Cloud Functions and Firestore to display the messages using [this](https://github.com/j05u3/chats_manager): https://gist.github.com/j05u3/b3ad1d5d9106a918941587e03c1919b1, let me know if you have any questions/doubts ✌️.
+
 [build-img]: https://github.com/j05u3/whatsapp-cloud-api-express/actions/workflows/release.yml/badge.svg
 [build-url]: https://github.com/j05u3/whatsapp-cloud-api-express/actions/workflows/release.yml
 [downloads-img]: https://img.shields.io/npm/dt/whatsapp-cloud-api-express
