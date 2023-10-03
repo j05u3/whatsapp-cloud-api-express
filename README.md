@@ -18,7 +18,7 @@ All features in [here](https://github.com/tawn33y/whatsapp-cloud-api/tree/v0.2.6
 
 - 🔥 Added `sendReaction` function to [react to a message](https://github.com/j05u3/whatsapp-cloud-api-express/pull/1#issue-1922143536).
 
-- 🔥 Added the ability to [reply to a message](https://github.com/j05u3/whatsapp-cloud-api-express/pull/2)).
+- 🔥 Added the ability to [reply to a message](https://github.com/j05u3/whatsapp-cloud-api-express/pull/2).
 
 - 🔥 Made the webhook able to run on serverless environments (like Google Cloud Functions).[^1]
 
