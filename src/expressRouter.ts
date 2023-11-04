@@ -1,6 +1,12 @@
 import { Request, Response } from 'express-serve-static-core';
 import { FreeFormObject } from './utils/misc';
-import { Message, Status, StatusReceived } from './createBot.types';
+import {
+  InteractiveType,
+  Message,
+  MessageType,
+  Status,
+  StatusReceived,
+} from './createBot.types';
 import { Router } from 'express';
 import { logRequest } from './utils/logRequestMiddleware';
 
@@ -61,12 +67,12 @@ function webhookMainHandler(
                 from?: string;
                 id?: string;
                 timestamp?: string;
-                type?: string;
+                type?: MessageType;
                 text?: {
                   body?: FreeFormObject;
                 };
                 interactive?: {
-                  type?: string;
+                  type?: InteractiveType;
                   list_reply?: FreeFormObject;
                   button_reply?: FreeFormObject;
                 };
@@ -106,12 +112,12 @@ function webhookMainHandler(
               const { from, id, timestamp, type, text, interactive, ...rest } =
                 message;
 
-              let event: string | undefined;
+              let event: InteractiveType | MessageType | undefined;
               let data: FreeFormObject | undefined;
 
               switch (type) {
                 case 'text':
-                  event = 'text';
+                  event = type;
                   data = { text: text?.body };
                   break;
 
@@ -121,13 +127,13 @@ function webhookMainHandler(
                 case 'video':
                 case 'sticker':
                 case 'location':
-                case 'button':
+                case 'button': // template button reply
                 case 'contacts':
                   event = type;
                   data = rest[type] as FreeFormObject;
                   break;
 
-                case 'interactive':
+                case 'interactive': // e.g. when the user replies to a sendReplyButtons message
                   event = interactive?.type;
                   data = {
                     ...(interactive?.list_reply ?? interactive?.button_reply),

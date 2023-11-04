@@ -11,7 +11,7 @@ export interface Message {
   name: string | undefined;
   id: string;
   timestamp: string;
-  type: string;
+  type: MessageType | InteractiveType;
   data: FreeFormObject; // TODO: properly define interfaces for each type
   to_phone_number_id: string;
 }
@@ -38,6 +38,25 @@ export interface StatusError {
       }
     | undefined;
 }
+
+// from: https://developers.facebook.com/docs/whatsapp/cloud-api/webhooks/components
+export type MessageType =
+  | 'audio'
+  | 'button'
+  | 'document'
+  | 'text'
+  | 'image'
+  | 'interactive'
+  | 'order'
+  | 'sticker'
+  | 'system'
+  | 'unknown'
+  | 'video'
+  // the following are not documented, but I tested that they are returned by the API
+  | 'location'
+  | 'contacts';
+
+export type InteractiveType = 'button_reply' | 'list_reply';
 
 export interface MessageSender {
   sendText: (
