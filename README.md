@@ -130,6 +130,8 @@ If you make local changes to this repo and then want to test your local version 
 
 Don't forget that serverless environments like Google Cloud Functions only upload files in the folder in which your `package.json` is, so you better place the `.tgz` file next to it if you want to deploy it to a serverless environment.
 
+If you want to publish a new version you can use `npm run cm` and follow the instructions.
+
 ## Attribution
 
 This project was based on https://github.com/j05u3/whatsapp-cloud-api which is a fork of https://github.com/tawn33y/whatsapp-cloud-api. Thanks to @tawn33y and the community for the hard work.
