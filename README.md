@@ -42,7 +42,7 @@ All features in [here](https://github.com/tawn33y/whatsapp-cloud-api/tree/v0.2.6
 npm install whatsapp-cloud-api-express
 ```
 
-## Usage
+## How to use it?
 
 You can use this library only to send Whatsapp messages or only to receive Whatsapp messages or you can do both.
 
