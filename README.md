@@ -22,13 +22,15 @@ All features in [here](https://github.com/tawn33y/whatsapp-cloud-api/tree/v0.2.6
 
 - 🔥 Made the webhook able to run on serverless environments (like Google Cloud Functions).[^1]
 
-- ✅ Added `to_phone_number` so you can identify which phone number was the one receiving the message.
+- 🔥 Don't get hacked (receive fake messages that your users never sent): you can provide your facebook app secret so the library will make sure all messages come from facebook servers.
+
+- ✅ Added `to_phone_number` so you can identify which of your whatsapp phone numbers was destined to receive the message, this is useful if you have multiple whatsapp numbers on the same facebook app.
 
 - ✅ Added support for type `button` in incoming messages. Which is generated when the user "replies" from a template button.
 
 - ✅ Added a logging callback for each message sent so you can log each sent message easily.
 
-- ✅ Changed the architecture so we can use the webhook and the sender separately.
+- ✅ Changed the architecture so we can use the webhook (reciever) and the sender separately.
 
 - ✅ Added 'parameters' type for template header component.
 
@@ -58,13 +60,18 @@ app.use(
     // fill your own values here:
     webhookVerifyToken: process.env.WHATSAPP_WEBHOOK_VERIFICATION_TOKEN ?? '',
     onNewMessage,
+    appSecret: 'your_facebook_app_secret', // optional, you can set null
+    onStatusChange, // optional
+    logAllEntrantRequests, // optional
   })
 );
 ```
 
+Don't forget to start the express server with `app.listen(3000)` (you can change the port of course) in case you are not using a serverless environment.
+
 You will need to verify the webhook with Facebook. You can either deploy this to a server or deploy locally and use ngrok, the @tawn33y tutorial above has a section about using ngrok and verifying.
 
-This library has been tested on v15.0 and v17.0 of the webhook API.
+This library has been tested on v15.0, v17.0 and v18.0 of the [webhook Cloud API](https://developers.facebook.com/docs/whatsapp/business-platform/changelog).
 
 ### Sending messages
 
@@ -97,19 +104,31 @@ Here is an "almost complete" example of the integration using Google Cloud Funct
 [commitizen-img]: https://img.shields.io/badge/commitizen-friendly-brightgreen.svg
 [commitizen-url]: http://commitizen.github.io/cz-cli/
 
+## Real world use cases
+
+I built [monaguillo.org](https://monaguillo.org) using this library. If you have built something with this library and want to share it, let me know and I can add it here 💪.
+
+I also built an open-source [chats visualization frontend here](https://github.com/j05u3/chats_manager) that you can use to visualize your chats, it's compatible with this library ✌️.
+
 ## Some recommendations
 
-* If you are using serverless I suggest to set min instances (in Google Cloud Functions) or reserved concurrency (in AWS) to at least 1 (~4 USD or less in monthly cost) so your bot responds fast without being affected by cold starts.
+- If you are using serverless I suggest to set min instances (in Google Cloud Functions) or reserved concurrency (in AWS) to at least 1 (~4 USD or less in monthly cost) so your bot responds fast without being affected by cold starts.
 
-* Make sure to **only allowlist** the Facebook IPs in your serverless environment. See [here](https://developers.facebook.com/docs/whatsapp/cloud-api/guides/set-up-webhooks/#ip-addresses) for the IPs.
+- In the webhook if you are not providing your facebook app secret (`appSecret`) then at least make sure to **only allowlist** the Facebook IPs in your serverless environment. See [here](https://developers.facebook.com/docs/whatsapp/cloud-api/guides/set-up-webhooks/#ip-addresses) for the IPs.
 
-* Make sure your `onNewMessage` function resolves in a 'reasonable time'. Not sure how long yet, but in a project where we were sleeping one minute Whatsapp servers started retrying the call to the webhook.
+- Make sure your `onNewMessage` function resolves in a 'reasonable time'. Not sure how long yet, but in a project where we were sleeping one minute Whatsapp servers started retrying the call to the webhook.
 
-## Related work
+## Local development
 
-I built an open-source [chats visualization frontend here](https://github.com/j05u3/chats_manager) that you can use to visualize your chats, it's compatible with this library ✌️.
+If you make local changes to this repo and then want to test your local version in your own project you can use `npm run build` and then `npm pack` in the root of this repo, it will generate a `.tgz` file that you can copy to your project next to your `package.json` and in your `package.json` you can add the dependency like this:
 
-I also built [monaguillo.org](https://monaguillo.org) using this library.
+```
+"dependencies": {
+  "whatsapp-cloud-api-express": "file:./whatsapp-cloud-api-express-1.0.1.tgz"
+}
+```
+
+Don't forget that serverless environments like Google Cloud Functions only upload files in the folder in which your `package.json` is, so you better place the `.tgz` file next to it if you want to deploy it to a serverless environment.
 
 ## Attribution
 

@@ -9,6 +9,7 @@ import {
 } from './createBot.types';
 import { Router } from 'express';
 import { logRequest } from './utils/logRequestMiddleware';
+import { createHmac } from 'crypto';
 
 function webhookVerifyTokenHandler(webhookVerifyToken: string) {
   return (
@@ -49,8 +50,19 @@ function webhookVerifyTokenHandler(webhookVerifyToken: string) {
 
 function webhookMainHandler(
   onNewMessage: (message: Message) => Promise<void>,
+  appSecret: string | null,
   onStatusChange?: (status: Status) => Promise<void>
 ) {
+  if (appSecret == null) {
+    // show a warning if the appSecret is not set
+    console.warn(
+      '[Warning❗] The appSecret is not set. ' +
+        'This means that the request signature will not be verified. ' +
+        'This is not recommended for production environments. ' +
+        'Alternatively, you can verify facebook servers IPs: ' +
+        ' https://developers.facebook.com/docs/whatsapp/cloud-api/guides/set-up-webhooks/#ip-addresses'
+    );
+  }
   return (
     req: Request<
       Record<string, unknown>,
@@ -99,6 +111,57 @@ function webhookMainHandler(
       if (!req.body.object || !req.body.entry) {
         res.sendStatus(400);
         return;
+      }
+
+      //// validate the request
+      if (appSecret != null) {
+        // get raw body
+        // TODO: find/expose a way to get rawBody in other environments, maybe suggest the user to use a middleware
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+        const buf = (req as any).rawBody as Buffer | undefined; // this works in Google Cloud Functions https://issuetracker.google.com/issues/36252545?pli=1
+
+        if (buf == null) {
+          console.error(
+            '[verify] No rawBody found in the request, check your serverless environment ' +
+              'configuration and/or use a middleware like the "verify"' +
+              ' function in express.json, see https://flaviocopes.com/express-get-raw-body'
+          );
+          res.sendStatus(403);
+          return;
+        }
+
+        const signature256HeaderPossiblyArray =
+          req.headers['X-Hub-Signature-256'] ??
+          req.headers['x-hub-signature-256'];
+
+        // concat signature256 if it a string[] to a single string
+        const signature256Header =
+          (Array.isArray(signature256HeaderPossiblyArray)
+            ? signature256HeaderPossiblyArray.join('')
+            : signature256HeaderPossiblyArray) ?? '';
+
+        // remove the prefix if it exists
+        const SIGNATURE_PREFIX = 'sha256=';
+        const signature256 = signature256Header.startsWith(SIGNATURE_PREFIX)
+          ? signature256Header.slice(SIGNATURE_PREFIX.length)
+          : signature256Header;
+
+        // validate signature256 is not empty
+        if (signature256 == null || signature256 === '') {
+          console.error(
+            '[verify] No signature found, headers: ' +
+              JSON.stringify(req.headers)
+          );
+          res.sendStatus(403);
+          return;
+        }
+        const hash = createHmac('sha256', appSecret).update(buf).digest('hex');
+        if (hash != signature256) {
+          console.error('[verify] Signature verification failed');
+          res.sendStatus(403);
+          return;
+        }
+        console.log('[verify] ✅ Signature verification passed');
       }
 
       for (const entry of req.body.entry) {
@@ -194,6 +257,11 @@ function webhookMainHandler(
 }
 
 export interface WebhookRouterOptions {
+  /**
+   * The app secret is used to verify the request signature.
+   * If null, the request signature will not be verified.
+   */
+  appSecret: string | null;
   webhookVerifyToken: string;
   onNewMessage: (message: Message) => Promise<void>;
   webhookPath?: string;
@@ -221,7 +289,11 @@ export function getWebhookRouter(options: WebhookRouterOptions): Router {
   );
   r.post(
     options.webhookPath ?? '/',
-    webhookMainHandler(options.onNewMessage, options.onStatusChange)
+    webhookMainHandler(
+      options.onNewMessage,
+      options.appSecret,
+      options.onStatusChange
+    )
   );
 
   return r;
