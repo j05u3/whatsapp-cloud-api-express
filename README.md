@@ -58,7 +58,7 @@ app.use(
   // but make sure to change it on the Facebook Developer Console too
   getWebhookRouter({
     // fill your own values here:
-    webhookVerifyToken: process.env.WHATSAPP_WEBHOOK_VERIFICATION_TOKEN ?? '',
+    webhookVerifyToken: 'your_whatsapp_webhook_verification_token',
     onNewMessage,
     appSecret: 'your_facebook_app_secret', // optional, you can set null
     onStatusChange, // optional
