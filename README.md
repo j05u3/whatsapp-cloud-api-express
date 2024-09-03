@@ -85,7 +85,49 @@ const sender = createMessageSender(
 );
 ```
 
-To send a message you can check [this guide](https://github.com/tawn33y/whatsapp-cloud-api/blob/v0.2.6/API.md#api-reference) (omit `createBot`, `startExpressServer` and `on` as those were removed here). You can find some examples in [there too](https://github.com/tawn33y/whatsapp-cloud-api/tree/v0.2.6).
+To send a message you can use the following functions:
+
+### sendText(to, text, [options])
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| to | `String` | | WhatsApp ID or phone number for the person you want to send a message to. |
+| text | `String` | | The text of the text message. |
+| [options] | `Object` | | |
+| [options.preview_url] | `Boolean` | | By default, WhatsApp recognizes URLs and makes them clickable, but you can also include a preview box with more information about the link. Set this field to true if you want to include a URL preview box. |
+
+### sendProduct(to, catalogId, [options])
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| to | `String` | | WhatsApp ID or phone number for the person you want to send a message to. |
+| catalogId | `String` | | The ID of the catalog containing the product. |
+| [options] | `Object` | | |
+| [options.body] | `String` | | The text to be displayed in the message body. |
+| [options.footerText] | `String` | | The text to be displayed in the message footer. |
+| [options.productRetailerId] | `String` | | The ID of the specific product to be displayed. |
+
+### sendProductList(to, catalogId, headerText, bodyText, sections, [options])
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| to | `String` | | WhatsApp ID or phone number for the person you want to send a message to. |
+| catalogId | `String` | | The ID of the catalog containing the products. |
+| headerText | `String` | | The text to be displayed in the message header. |
+| bodyText | `String` | | The text to be displayed in the message body. |
+| sections | `Array` | | An array of section objects, each containing a title and an array of product IDs. |
+| [options] | `Object` | | |
+| [options.footerText] | `String` | | The text to be displayed in the message footer. |
+
+### sendCatalog(to, bodyText, [options])
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| to | `String` | | WhatsApp ID or phone number for the person you want to send a message to. |
+| bodyText | `String` | | The text to be displayed in the message body. |
+| [options] | `Object` | | |
+| [options.footerText] | `String` | | The text to be displayed in the message footer. |
+| [options.thumbnailProductRetailerId] | `String` | | The ID of the product to be used as the thumbnail for the catalog message. |
 
 Here is an "almost complete" example of the integration using Google Cloud Functions and Firestore to display the messages using [this](https://github.com/j05u3/chats_manager): https://gist.github.com/j05u3/b3ad1d5d9106a918941587e03c1919b1, let me know if you have any questions/doubts ✌️.
 
