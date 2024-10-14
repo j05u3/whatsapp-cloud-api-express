@@ -192,6 +192,7 @@ function webhookMainHandler(
                 case 'location':
                 case 'button': // template button reply
                 case 'contacts':
+                case 'order':
                   event = type;
                   data = rest[type] as FreeFormObject;
                   break;

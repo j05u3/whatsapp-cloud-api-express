@@ -303,6 +303,68 @@ export interface VideoMessage extends Message {
   context?: { message_id: string };
 }
 
+export interface ProductMessage extends Message {
+  type: 'interactive';
+  interactive: {
+    type: 'product';
+    body: {
+      text: string;
+    };
+    action: {
+      catalog_id: string;
+      product_retailer_id: string;
+    };
+    footer?: {
+      text: string;
+    };
+  };
+}
+
+export interface ProductListMessage extends Message {
+  type: 'interactive';
+  interactive: {
+    type: 'product_list';
+    header: {
+      type: 'text';
+      text: string;
+    };
+    body: {
+      text: string;
+    };
+    footer?: {
+      text: string;
+    };
+    action: {
+      catalog_id: string;
+      sections: {
+        title: string;
+        product_items: {
+          product_retailer_id: string;
+        }[];
+      }[];
+    };
+  };
+}
+
+export interface CatalogMessage extends Message {
+  type: 'interactive';
+  interactive: {
+    type: 'catalog_message';
+    body: {
+      text: string;
+    };
+    action: {
+      name: 'catalog_message';
+      parameters?: {
+        thumbnail_product_retailer_id?: string;
+      };
+    };
+    footer?: {
+      text: string;
+    };
+  };
+}
+
 export type MediaMessage =
   | AudioMessage
   | DocumentMessage

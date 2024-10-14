@@ -52,11 +52,48 @@ export type MessageType =
   | 'system'
   | 'unknown'
   | 'video'
-  // the following are not documented, but I tested that they are returned by the API
   | 'location'
-  | 'contacts';
+  | 'contacts'
+  | 'catalog'
+  | 'multi_product';
 
 export type InteractiveType = 'button_reply' | 'list_reply';
+
+export interface Product extends Message {
+  type: 'catalog';
+  catalog: {
+    catalog_id: string;
+    body?: {
+      text: string;
+    };
+  };
+}
+
+export interface ProductList extends Message {
+  type: 'multi_product';
+  interactive: {
+    type: 'product_list';
+    header: {
+      type: 'text';
+      text: string;
+    };
+    body: {
+      text: string;
+    };
+    footer?: {
+      text: string;
+    };
+    action: {
+      catalog_id: string;
+      sections: {
+        title: string;
+        product_items: {
+          product_retailer_id: string;
+        }[];
+      }[];
+    };
+  };
+}
 
 export interface MessageSender {
   sendText: (
@@ -169,6 +206,34 @@ export interface MessageSender {
       footerText?: string;
       header?: InteractiveHeader;
       reply?: string;
+    }
+  ) => Promise<SendMessageResult>;
+  sendProduct: (
+    to: string,
+    catalogId: string,
+    options?: {
+      body?: string;
+    }
+  ) => Promise<SendMessageResult>;
+  sendProductList: (
+    to: string,
+    catalogId: string,
+    headerText: string,
+    bodyText: string,
+    sections: {
+      title: string;
+      productIds: string[];
+    }[],
+    options?: {
+      footerText?: string;
+    }
+  ) => Promise<SendMessageResult>;
+  sendCatalog: (
+    to: string,
+    bodyText: string,
+    options?: {
+      thumbnailProductRetailerId?: string;
+      footerText?: string;
     }
   ) => Promise<SendMessageResult>;
 }

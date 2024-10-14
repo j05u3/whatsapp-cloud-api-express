@@ -9,6 +9,9 @@ import {
   ContactMessage,
   InteractiveMessage,
   ReactionMessage,
+  ProductListMessage,
+  ProductMessage,
+  CatalogMessage,
 } from './messages.types';
 import { sendRequestHelper } from './sendRequestHelper';
 
@@ -192,6 +195,89 @@ export const createMessageSender: ICreateMessageSender = (
               rows: value,
             })),
           },
+        },
+      }),
+    sendProduct: (
+      to: string,
+      catalogId: string,
+      options?: {
+        body?: string;
+        footerText?: string;
+        productRetailerId?: string;
+      }
+    ) =>
+      sendRequest<ProductMessage>({
+        ...payloadBase,
+        to,
+        type: 'interactive',
+        interactive: {
+          type: 'product',
+          body: { text: options?.body || '' },
+          action: {
+            catalog_id: catalogId,
+            product_retailer_id: options?.productRetailerId || '',
+          },
+          ...(options?.footerText
+            ? { footer: { text: options.footerText } }
+            : {}),
+        },
+      }),
+    sendProductList: (to, catalogId, headerText, bodyText, sections, options) =>
+      sendRequest<ProductListMessage>({
+        ...payloadBase,
+        to,
+        type: 'interactive',
+        interactive: {
+          type: 'product_list',
+          header: {
+            type: 'text',
+            text: headerText,
+          },
+          body: {
+            text: bodyText,
+          },
+          ...(options?.footerText
+            ? { footer: { text: options.footerText } }
+            : {}),
+          action: {
+            catalog_id: catalogId,
+            sections: sections.map(section => ({
+              title: section.title,
+              product_items: section.productIds.map(id => ({
+                product_retailer_id: id,
+              })),
+            })),
+          },
+        },
+      }),
+    sendCatalog: (
+      to: string,
+      bodyText: string,
+      options?: { footerText?: string; thumbnailProductRetailerId?: string }
+    ) =>
+      sendRequest<CatalogMessage>({
+        ...payloadBase,
+        to,
+        type: 'interactive',
+        interactive: {
+          type: 'catalog_message',
+          body: {
+            text: bodyText,
+          },
+          action: {
+            name: 'catalog_message',
+            ...(options?.thumbnailProductRetailerId
+              ? {
+                  parameters: {
+                    thumbnail_product_retailer_id:
+                      options.thumbnailProductRetailerId,
+                  },
+                }
+              : {}),
+          },
+          ...(options?.footerText
+            ? { footer: { text: options.footerText } }
+            : {}),
         },
       }),
   };
