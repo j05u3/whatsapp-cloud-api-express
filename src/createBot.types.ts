@@ -7,7 +7,15 @@ import { SendMessageResult } from './sendRequestHelper';
 import { FreeFormObject } from './utils/misc';
 
 export interface Message {
+  /**
+   * Canonical sender identifier. This is a phone number for legacy webhook
+   * payloads and a WhatsApp user ID for username-based payloads.
+   */
   from: string;
+  /** WhatsApp user ID supplied by username-based webhook payloads. */
+  from_user_id?: string;
+  /** WhatsApp username supplied by username-based webhook payloads. */
+  username?: string;
   name: string | undefined;
   id: string;
   timestamp: string;
