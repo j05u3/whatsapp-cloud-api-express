@@ -26,7 +26,7 @@ All features in [here](https://github.com/tawn33y/whatsapp-cloud-api/tree/v0.2.6
 
 - ✅ Added `to_phone_number` so you can identify which of your whatsapp phone numbers was destined to receive the message, this is useful if you have multiple whatsapp numbers on the same facebook app.
 
-- Supports username-based incoming messages. For these webhooks, `Message.from` contains the WhatsApp user ID and the optional `Message.from_user_id` and `Message.username` fields expose the original identity data.
+- ✅ Supports username-based incoming messages. For these webhooks, `Message.from` contains the WhatsApp user ID and the optional `Message.from_user_id` and `Message.username` fields expose the original identity data.
 
 - ✅ Added support for type `button` in incoming messages. Which is generated when the user "replies" from a template button.
 
