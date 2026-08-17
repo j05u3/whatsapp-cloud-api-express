@@ -11,6 +11,49 @@ import { Router } from 'express';
 import { logRequest } from './utils/logRequestMiddleware';
 import { createHmac } from 'crypto';
 
+interface IncomingMessageSender {
+  from?: string;
+  from_user_id?: string;
+}
+
+interface IncomingMessageContact {
+  wa_id?: string;
+  user_id?: string;
+  profile?: {
+    name?: string;
+    username?: string;
+    [others: string]: unknown;
+  };
+  [others: string]: unknown;
+}
+
+export function resolveIncomingMessageSender(
+  message: IncomingMessageSender,
+  contacts?: IncomingMessageContact[]
+): Pick<Message, 'from' | 'from_user_id' | 'username' | 'name'> {
+  const matchingContact =
+    contacts?.find(
+      contact =>
+        (message.from != null && contact.wa_id === message.from) ||
+        (message.from_user_id != null &&
+          contact.user_id === message.from_user_id)
+    ) ?? contacts?.[0];
+
+  const fromUserId = message.from_user_id ?? matchingContact?.user_id;
+
+  return {
+    from:
+      message.from ??
+      fromUserId ??
+      matchingContact?.wa_id ??
+      matchingContact?.user_id ??
+      '',
+    from_user_id: fromUserId,
+    username: matchingContact?.profile?.username,
+    name: matchingContact?.profile?.name,
+  };
+}
+
 function webhookVerifyTokenHandler(webhookVerifyToken: string) {
   return (
     req: Request<
@@ -77,6 +120,7 @@ function webhookMainHandler(
               };
               messages?: {
                 from?: string;
+                from_user_id?: string;
                 id?: string;
                 timestamp?: string;
                 type?: MessageType;
@@ -92,8 +136,11 @@ function webhookMainHandler(
               }[];
               statuses?: StatusReceived[];
               contacts?: {
+                wa_id?: string;
+                user_id?: string;
                 profile?: {
                   name?: string;
+                  username?: string;
                   [others: string]: unknown;
                 };
                 [others: string]: unknown;
@@ -172,7 +219,7 @@ function webhookMainHandler(
             // processing messages
             // https://developers.facebook.com/docs/whatsapp/cloud-api/webhooks/components#messages-object
             for (const message of value.messages ?? []) {
-              const { from, id, timestamp, type, text, interactive, ...rest } =
+              const { id, timestamp, type, text, interactive, ...rest } =
                 message;
 
               let event: InteractiveType | MessageType | undefined;
@@ -215,12 +262,14 @@ function webhookMainHandler(
                 };
               }
 
-              const name = value.contacts?.[0]?.profile?.name ?? undefined;
+              const sender = resolveIncomingMessageSender(
+                message,
+                value.contacts
+              );
 
-              if (event && data) {
+              if (event && data && sender.from) {
                 const payload: Message = {
-                  from: from ?? '',
-                  name,
+                  ...sender,
                   id: id ?? '',
                   timestamp: timestamp ?? '',
                   type: event,
