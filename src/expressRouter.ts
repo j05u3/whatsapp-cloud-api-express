@@ -9,7 +9,7 @@ import {
 } from './createBot.types';
 import { Router } from 'express';
 import { logRequest } from './utils/logRequestMiddleware';
-import { createHmac } from 'crypto';
+import { createHmac, timingSafeEqual } from 'crypto';
 
 interface IncomingMessageSender {
   from?: string;
@@ -131,6 +131,7 @@ function webhookMainHandler(
                   type?: InteractiveType;
                   list_reply?: FreeFormObject;
                   button_reply?: FreeFormObject;
+                  nfm_reply?: FreeFormObject;
                 };
                 [others: string]: unknown;
               }[];
@@ -202,8 +203,25 @@ function webhookMainHandler(
           res.sendStatus(403);
           return;
         }
-        const hash = createHmac('sha256', appSecret).update(buf).digest('hex');
-        if (hash != signature256) {
+        const hash = createHmac('sha256', appSecret)
+          .update(Uint8Array.from(buf))
+          .digest('hex');
+        const hashBuffer = Buffer.from(hash, 'hex');
+        const signatureBuffer = Buffer.from(signature256, 'hex');
+        const hashBytes = new Uint8Array(
+          hashBuffer.buffer,
+          hashBuffer.byteOffset,
+          hashBuffer.byteLength
+        );
+        const signatureBytes = new Uint8Array(
+          signatureBuffer.buffer,
+          signatureBuffer.byteOffset,
+          signatureBuffer.byteLength
+        );
+        if (
+          hashBuffer.length !== signatureBuffer.length ||
+          !timingSafeEqual(hashBytes, signatureBytes)
+        ) {
           console.error('[verify] Signature verification failed');
           res.sendStatus(403);
           return;
@@ -244,12 +262,22 @@ function webhookMainHandler(
                   data = rest[type] as FreeFormObject;
                   break;
 
-                case 'interactive': // e.g. when the user replies to a sendReplyButtons message
+                case 'interactive': {
                   event = interactive?.type;
-                  data = {
-                    ...(interactive?.list_reply ?? interactive?.button_reply),
-                  };
+
+                  if (interactive?.type) {
+                    const replyData = (interactive as FreeFormObject)[
+                      interactive.type
+                    ];
+                    data =
+                      replyData && typeof replyData === 'object'
+                        ? { ...(replyData as FreeFormObject) }
+                        : {};
+                  } else {
+                    data = {};
+                  }
                   break;
+                }
 
                 default:
                   break;

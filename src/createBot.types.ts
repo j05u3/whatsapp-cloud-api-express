@@ -65,7 +65,7 @@ export type MessageType =
   | 'catalog'
   | 'multi_product';
 
-export type InteractiveType = 'button_reply' | 'list_reply';
+export type InteractiveType = 'button_reply' | 'list_reply' | 'nfm_reply';
 
 export interface Product extends Message {
   type: 'catalog';
